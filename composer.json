@@ -1,7 +1,5 @@
 {
     "require": {
-        "php-http/guzzle6-adapter": "1.1",
-        "guzzlehttp/guzzle": "6.0",
-        "sparkpost/sparkpost": "^2.3"
+        "sendgrid/sendgrid": "~7"
     }
 }

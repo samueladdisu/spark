@@ -1,25 +1,22 @@
 <?php
 
-require 'vendor/autoload.php';
+require_once 'config.php';
+require 'vendor/autoload.php'; 
 
-use SparkPost\SparkPost;
-use GuzzleHttp\Client;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-
-$httpClient = new GuzzleAdapter(new Client());
-$sparky = new SparkPost($httpClient, ['key' => '']);
-
-$sparky->setOptions(['async' => false]);
-$results = $sparky->transmissions->post([
-  'options' => [
-    'sandbox' => true
-  ],
-  'content' => [
-    'from' => 'testing@sparkpostbox.com',
-    'subject' => 'Oh hey!',
-    'html' => '<html><body><p>Testing SparkPost - the world\'s most awesomest email service!</p></body></html>'
-  ],
-  'recipients' => [
-    ['address' => ['email'=>'developers+php@sparkpost.com']]
-  ]
-]);
+$email = new \SendGrid\Mail\Mail(); 
+$email->setFrom("samueladdisu9@gmail.com", "Samuel addisu Test");
+$email->setSubject("Sending with SendGrid is Fun");
+$email->addTo("nardidumessa@gmail.com", "Nardos Atnaw");
+$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+$email->addContent(
+    "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
+);
+$sendgrid = new \SendGrid( SENDGRID_API_KEY );
+try {
+    $response = $sendgrid->send($email);
+    print $response->statusCode() . "\n";
+    print_r($response->headers());
+    print $response->body() . "\n";
+} catch (Exception $e) {
+    echo 'Caught exception: '. $e->getMessage() ."\n";
+}
