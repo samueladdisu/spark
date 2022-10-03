@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/kuriftur/reservations.kurifturesorts.com/spark
+    - /bin/cp -R * $DEPLOYPATH
